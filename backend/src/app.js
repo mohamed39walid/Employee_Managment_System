@@ -2,7 +2,9 @@ const express = require("express");
 const connectDB = require("./connection/dbConfig");
 const roleAuth = require("./middlewares/roleauth");
 const User = require("./models/user");
+const cors = require('cors')
 const app = express();
+app.use(cors())
 const userRoutes = require("./routes/userRoutes");
 const employeeRoutes = require("./routes/employeeRoutes")
 const meetingandtaskroutes = require("./routes/meetingandtaskRoutes")
