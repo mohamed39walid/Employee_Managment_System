@@ -3,9 +3,11 @@ const User = require("../models/user");
 
 exports.createemployee = async (req, res) => {
   const { user_id, salary, position, contactnumber, address, status } = req.body;
+  console.log("Creating employee with data:", req.body);
   try {
     const user = await User.findById(user_id);
     if (!user) {
+      console.log("User not found");
       return res.status(404).json({ message: "User not found" });
     }
 
@@ -25,13 +27,13 @@ exports.createemployee = async (req, res) => {
   }
 };
 
+
 exports.getallemployees = async (req, res) => {
   try {
-    const employees = await Employee.find().populate("user_id");
-    res.status(200).json(employees);
-  } catch (err) {
-    console.error("Error fetching employees:", err.message);
-    res.status(500).json({ message: "Server error" });
+    const employees = await Employee.find().populate("user_id").exec();
+    res.json(employees);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -48,9 +50,12 @@ exports.getEmployee = async (req, res) => {
   }
 };
 
+
 exports.updateEmployee = async (req, res) => {
   try {
-    const employee = await Employee.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate("user_id");
+    const employee = await Employee.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    }).populate("user_id");
     if (!employee) {
       return res.status(404).json({ message: "Employee not found" });
     }

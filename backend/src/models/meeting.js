@@ -10,20 +10,19 @@ const meetingSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    time: {
+    date: {
       type: Date,
       required: true,
     },
-    manager_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+    time: {
+      type: String, // Use String or Date depending on how you handle time
       required: true,
     },
-    user_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+    location: {
+      type: String,
+      required: false,
     },
+    participants: [{ type: mongoose.Schema.Types.ObjectId, ref: "Employee" }], // Reference to Employee
   },
   { timestamps: true }
 );

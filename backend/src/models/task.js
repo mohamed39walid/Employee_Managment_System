@@ -28,14 +28,9 @@ const taskSchema = mongoose.Schema({
         type:Date,
         required: false
     },
-    admin_id:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required:true
-    },
     employee_id:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
+        ref:"Employee",
         required:true
     }
 },{timestamps:true})

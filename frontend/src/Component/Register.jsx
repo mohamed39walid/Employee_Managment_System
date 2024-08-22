@@ -14,6 +14,7 @@ const Register = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    
     if (token) {
       navigate("/"); // Redirect to home if user is already logged in
     }
@@ -35,7 +36,8 @@ const Register = () => {
       if (response.ok) {
         const token = data.token;
         localStorage.setItem("token", token);
-        navigate("/"); // Redirect to home or dashboard
+        localStorage.setItem("role", role);
+        navigate("/userhome"); // Redirect to home or dashboard
       } else {
         setError(data.message || "Registration failed. Please try again.");
       }
