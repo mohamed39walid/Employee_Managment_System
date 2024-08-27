@@ -34,6 +34,7 @@ function AddTask() {
     // Adjust filtering to match your data structure
     setFilteredEmployees(
       employees.filter(employee =>
+        employee.user_id && // Ensure user_id is not null
         employee.user_id.email?.toLowerCase().includes(searchTerm.toLowerCase())
       )
     );
@@ -94,7 +95,7 @@ function AddTask() {
               <option value="" disabled>Select an employee</option>
               {filteredEmployees.map((employee) => (
                 <option key={employee._id} value={employee._id}>
-                  {employee.user_id.email} {/* Update this based on your data structure */}
+                  {employee.user_id?.email || "No email available"} {/* Handle null case */}
                 </option>
               ))}
             </select>

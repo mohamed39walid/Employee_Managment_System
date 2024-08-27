@@ -40,17 +40,21 @@ function AdminDashboard() {
 
   const filteredEmployees = employees.filter(
     (employee) =>
-      employee.user_id.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      employee.user_id.email.toLowerCase().includes(searchQuery.toLowerCase())
+      employee.user_id && // Check if user_id is not null or undefined
+      (employee.user_id.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        employee.user_id.email.toLowerCase().includes(searchQuery.toLowerCase()))
   );
-
+  
   const filteredTasks = tasks.filter(
     (task) =>
-      task.employee_id.user_id.name
+      task.employee_id && // Check if employee_id is not null or undefined
+      task.employee_id.user_id && // Check if user_id is not null or undefined
+      (task.employee_id.user_id.name
         .toLowerCase()
         .includes(searchQuery.toLowerCase()) ||
-      task.title.toLowerCase().includes(searchQuery.toLowerCase())
+        task.title.toLowerCase().includes(searchQuery.toLowerCase()))
   );
+  
 
   const indexOfLastEmployee = currentPage * employeesPerPage;
   const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;

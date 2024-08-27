@@ -77,7 +77,7 @@ function Employeeupdatetask() {
   useEffect(() => {
     setFilteredEmployees(
       employees.filter((employee) =>
-        employee.user_id.email?.toLowerCase().includes(searchTerm.toLowerCase())
+        employee.user_id?.email?.toLowerCase().includes(searchTerm.toLowerCase()) || "No email available"
       )
     );
   }, [searchTerm, employees]);
@@ -105,7 +105,7 @@ function Employeeupdatetask() {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("updated successfully");
+      console.log("Updated successfully");
       navigate("/employeedashboard"); // Redirect after successful update
     } catch (error) {
       console.error("There was an error updating the task!", error);
@@ -140,8 +140,6 @@ function Employeeupdatetask() {
           <p><strong>Status:</strong> {data.status || "N/A"}</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
-
-
           <div>
             <label className="block text-sm font-medium mb-1 text-gray-700">Status</label>
             <select

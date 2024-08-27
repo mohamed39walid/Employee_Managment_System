@@ -1,33 +1,41 @@
 const Employee = require("../models/employee");
 const User = require("../models/user");
 
+//creating employee
 exports.createemployee = async (req, res) => {
-  const { user_id, salary, position, contactnumber, address, status } = req.body;
-  console.log("Creating employee with data:", req.body);
-  try {
-    const user = await User.findById(user_id);
-    if (!user) {
-      console.log("User not found");
-      return res.status(404).json({ message: "User not found" });
-    }
+  const { user_id, salary, position, contactnumber, address, status } =
+    req.body;
+  const employee = await Employee.findOne({ user_id });
+  if (employee) { 
+    console.error("This user is already an employee" )
+    res.json("This user is already an employee" )
+  } else {
+    console.log("Creating employee with data:", req.body);
+    try {
+      const user = await User.findById(user_id);
+      if (!user) {
+        console.log("User not found");
+        return res.status(404).json({ message: "User not found" });
+      }
 
-    const employee = new Employee({
-      user_id,
-      salary,
-      position,
-      contactnumber,
-      address,
-      status,
-    });
-    await employee.save();
-    res.status(201).json(employee);
-  } catch (err) {
-    console.error("Error creating employee:", err.message);
-    res.status(500).json({ message: "Server error" });
+      const employee = new Employee({
+        user_id,
+        salary,
+        position,
+        contactnumber,
+        address,
+        status,
+      });
+      await employee.save();
+      res.status(201).json(employee);
+    } catch (err) {
+      console.error("Error creating employee:", err.message);
+      res.status(500).json({ message: "Server error" });
+    }
   }
 };
 
-
+//get all employees
 exports.getallemployees = async (req, res) => {
   try {
     const employees = await Employee.find().populate("user_id").exec();
@@ -50,7 +58,7 @@ exports.getEmployee = async (req, res) => {
   }
 };
 
-
+//updating employees
 exports.updateEmployee = async (req, res) => {
   try {
     const employee = await Employee.findByIdAndUpdate(req.params.id, req.body, {
@@ -66,6 +74,7 @@ exports.updateEmployee = async (req, res) => {
   }
 };
 
+//deleting employee
 exports.deleteEmployee = async (req, res) => {
   try {
     const employee = await Employee.findByIdAndDelete(req.params.id);

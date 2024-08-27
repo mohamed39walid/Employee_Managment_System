@@ -3,7 +3,6 @@ import axios from "axios";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 
-
 function AddMeeting() {
   const [employees, setEmployees] = useState([]);
   const [newMeeting, setNewMeeting] = useState({
@@ -16,7 +15,6 @@ function AddMeeting() {
   });
   const [error, setError] = useState("");
 
-
   const navigate = useNavigate();
 
   // Fetch employees for the dropdown
@@ -25,7 +23,7 @@ function AddMeeting() {
       const response = await axios.get("http://localhost:5000/employee");
       const employeeOptions = response.data.map(employee => ({
         value: employee._id,
-        label: `${employee.user_id.name} (${employee.user_id.email})`
+        label: `${employee.user_id?.name || "No name available"} (${employee.user_id?.email || "No email available"})`
       }));
       setEmployees(employeeOptions);
     } catch (error) {

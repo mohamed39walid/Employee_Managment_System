@@ -21,7 +21,8 @@ app.use("/users",userRoutes)
 app.use("/employee",employeeRoutes)
 app.use('/',meetingandtaskroutes)
 app.use('/attendance',attendanceRoutes)
-require('./cron/updateTasks');
+
+
 
 app.listen(5000, () => {
   console.log("app is running on port 5000");
